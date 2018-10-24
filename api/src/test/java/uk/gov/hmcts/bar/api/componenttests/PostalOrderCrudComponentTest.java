@@ -408,7 +408,7 @@ public class PostalOrderCrudComponentTest extends ComponentTestBase {
         restActions.post("/allpay", proposedPostalOrderPaymentInstructionRequest).andExpect(status().isCreated());
 
         CaseFeeDetailRequest caseFeeDetailRequest = CaseFeeDetailRequest.caseFeeDetailRequestWith()
-            .caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
+        		.paymentInstructionId(1).caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
 
         restActionsForFeeClerk.post("/fees", caseFeeDetailRequest).andExpect(status().isCreated());
 
@@ -443,7 +443,7 @@ public class PostalOrderCrudComponentTest extends ComponentTestBase {
         restActions.post("/allpay", proposedPostalOrderPaymentInstructionRequest).andExpect(status().isCreated());
 
         CaseFeeDetailRequest caseFeeDetailRequest = CaseFeeDetailRequest.caseFeeDetailRequestWith()
-            .caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
+        		.paymentInstructionId(1).caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
 
         restActionsForFeeClerk.post("/fees", caseFeeDetailRequest).andExpect(status().isCreated());
 
@@ -487,7 +487,7 @@ public class PostalOrderCrudComponentTest extends ComponentTestBase {
         restActions.post("/allpay", proposedPostalOrderPaymentInstructionRequest).andExpect(status().isCreated());
 
         CaseFeeDetailRequest caseFeeDetailRequest = CaseFeeDetailRequest.caseFeeDetailRequestWith()
-            .caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
+        		.paymentInstructionId(1).caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
 
         restActionsForFeeClerk.post("/fees", caseFeeDetailRequest).andExpect(status().isCreated());
 
@@ -535,7 +535,7 @@ public class PostalOrderCrudComponentTest extends ComponentTestBase {
         restActions.post("/allpay", proposedPostalOrderPaymentInstructionRequest).andExpect(status().isCreated());
 
         CaseFeeDetailRequest caseFeeDetailRequest = CaseFeeDetailRequest.caseFeeDetailRequestWith()
-            .caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
+        		.paymentInstructionId(1).caseReference("case102").feeCode("X001").amount(550).feeVersion("1").build();
 
         restActionsForFeeClerk.post("/fees", caseFeeDetailRequest).andExpect(status().isCreated());
 
@@ -662,9 +662,48 @@ public class PostalOrderCrudComponentTest extends ComponentTestBase {
         String startDate = LocalDate.now().format(dtf);
         String endDate = LocalDate.now().format(dtf);
         restActionsForFeeClerk.get("/payment-instructions/count?status=PA&userId=1234&startDate="+startDate+"&endDate="+endDate).andExpect(status().isOk())
-            .andExpect(body().isEqualTo(1));
+            .andExpect(body().as(Long.class, (count) -> {
+                assertThat(count.equals(1));
+            }));
     }
 
+
+    @Test
+    public void givenPostalOrderPIsSubmitted_getNonResetCount() throws Exception {
+        PostalOrder proposedPostalOrderPaymentInstructionRequest = postalOrderPaymentInstructionRequestWith()
+            .payerName("Mr Payer Payer")
+            .amount(533)
+            .currency("GBP").status("D")
+            .postalOrderNumber("000000").build();
+
+        PostalOrder validatedPostalOrderPaymentInstructionRequest = postalOrderPaymentInstructionRequestWith()
+            .payerName("Mr Payer Payer")
+            .amount(533)
+            .currency("GBP").status("V")
+            .postalOrderNumber("000000").build();
+
+        PostalOrder submittedPostalOrderPaymentInstructionRequest = postalOrderPaymentInstructionRequestWith()
+            .payerName("Mr Payer Payer")
+            .amount(533)
+            .currency("GBP").status("PA")
+            .postalOrderNumber("000000").build();
+
+
+        restActions
+            .post("/postal-orders", proposedPostalOrderPaymentInstructionRequest)
+            .andExpect(status().isCreated());
+        restActions
+            .put("/postal-orders/1", validatedPostalOrderPaymentInstructionRequest)
+            .andExpect(status().isOk());
+        restActions
+            .put("/postal-orders/1", submittedPostalOrderPaymentInstructionRequest)
+            .andExpect(status().isOk());
+
+        restActionsForFeeClerk.get("/payment-instructions/count?status=PA").andExpect(status().isOk())
+            .andExpect(body().as(Long.class, (count) -> {
+                assertThat(count.equals(1));
+            }));
+    }
 
 }
 
