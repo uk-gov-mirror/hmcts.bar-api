@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import java.time.LocalDateTime;
 
 public class PaymentInstructionsSpecifications<T extends BasePaymentInstruction> {
+    public static final String IS_NULL = "isNull";
     private PaymentTypeService paymentTypeService;
     private PaymentInstructionSearchCriteriaDto paymentInstructionSearchCriteriaDto;
     protected Specification<T> statusSpec = null;
@@ -53,11 +54,11 @@ public class PaymentInstructionsSpecifications<T extends BasePaymentInstruction>
 
     public Specification<T> getPaymentInstructionsSpecification() {
 
-        Specification<T> andSpecs = Specification.where(statusSpec).and(startDateSpec)
+        Specification<T> andSpecs = Specification.where(statusSpec).and(startDateSpec).and(actionSpec).and(bgcNumberSpec)
             .and(endDateSpec).and(siteIdSpec).and(userIdSpec).and(paymentTypeSpec).and(transferredToPayhubSpec);
 		Specification<T> orSpecs = Specification.where(payerNameSpec).or(allPayTransactionIdSpec)
-				.or(chequeNumberSpec).or(postalOrderNumerSpec).or(dailySequenceIdSpec).or(actionSpec)
-				.or(caseReferenceSpec).or(bgcNumberSpec);
+				.or(chequeNumberSpec).or(postalOrderNumerSpec).or(dailySequenceIdSpec)
+				.or(caseReferenceSpec);
         return Specification.where(andSpecs).and(orSpecs);
     }
 
@@ -272,7 +273,13 @@ public class PaymentInstructionsSpecifications<T extends BasePaymentInstruction>
 
             Predicate predicate = null;
 
-            if (paymentInstructionSearchCriteriaDto.getBgcNumber() != null) {
+            if(paymentInstructionSearchCriteriaDto.getBgcNumber() == null) {
+                return null;
+            }
+
+            if (IS_NULL.equals(paymentInstructionSearchCriteriaDto.getBgcNumber())) {
+                predicate = builder.isNull(root.<String>get("bgcNumber"));
+            } else {
                 predicate = builder.equal(root.<String>get("bgcNumber"),
                     paymentInstructionSearchCriteriaDto.getBgcNumber());
             }
