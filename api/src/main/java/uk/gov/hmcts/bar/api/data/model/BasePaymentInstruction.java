@@ -56,7 +56,7 @@ public class BasePaymentInstruction {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String siteId;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private int dailySequenceId;
+    private String dailySequenceId;
     @Pattern(regexp = "^\\d{1,20}$", message = "invalid all pay transaction id")
     private String allPayTransactionId;
     @Pattern(regexp = "^\\d{6,6}$", message = "invalid cheque number")
@@ -65,6 +65,8 @@ public class BasePaymentInstruction {
     protected String postalOrderNumber;
     @Pattern(regexp = "^[a-zA-Z0-9]{6,6}$", message = "invalid authorization code")
     protected String authorizationCode;
+    @Pattern(regexp = "^[a-zA-Z0-9-]{11,11}$", message = "invalid remission reference")
+    protected String remissionReference;
 
     private boolean transferredToPayhub = false;
     @Length(max = 1024)
