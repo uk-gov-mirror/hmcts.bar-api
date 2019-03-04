@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,10 +38,13 @@ public class BarUserService {
         this.siteApiUrl = siteApiUrl;
     }
 
-    public BarUser saveUser(BarUser barUser){
-        Optional<BarUser> existingUser = barUserRepository.findBarUserById(barUser.getId());
-        return existingUser.filter(barUser1 -> barUser1.equals(barUser))
-            .orElseGet(() -> barUserRepository.save(barUser));
+    public BarUser saveUser(BarUser barUser) {
+        BarUser existingUser = getBarUser(barUser.getId());
+        if (existingUser == null || !existingUser.equals(barUser)){
+            return barUserRepository.save(barUser);
+        } else {
+            return existingUser;
+        }
     }
 
     public String getCurrentUserId() {
@@ -54,7 +58,13 @@ public class BarUserService {
 	}
 
     public Optional<BarUser> getBarUser() {
-        return barUserRepository.findBarUserById(getCurrentUserId());
+        String id = getCurrentUserId();
+        return Optional.ofNullable(getBarUser(id));
+    }
+
+    @Cacheable(cacheNames = "barusers", unless = "#result == null")
+    public BarUser getBarUser(String id) {
+        return barUserRepository.findBarUserById(id).orElse(null);
     }
 
     public Boolean validateUserAgainstSite(String email, String userToken, String siteId) throws IOException {
@@ -68,7 +78,5 @@ public class BarUserService {
         CloseableHttpResponse response = httpClient.execute(httpGet);
         return objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
     }
-
-
 
 }
