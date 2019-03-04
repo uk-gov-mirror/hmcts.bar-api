@@ -3,6 +3,9 @@ package uk.gov.hmcts.bar.api.componenttests.sugar;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -35,11 +38,13 @@ public class RestActions {
     }
 
     public ResultActions get(String urlTemplate, String siteId) {
+        setSecurityContext();
         httpHeaders.set(SITEID_HEADER, siteId);
         return get(urlTemplate);
     }
 
     public ResultActions get(String urlTemplate) {
+        setSecurityContext();
         addSiteIdHeader(DEFAULT_SITE_ID);
         try {
             return mvc.perform(MockMvcRequestBuilders
@@ -54,6 +59,7 @@ public class RestActions {
     }
 
     public ResultActions getCsv(String urlTemplate) {
+        setSecurityContext();
         List mediatypes = new ArrayList();
         mediatypes.add(new MediaType("text", "csv"));
         httpHeaders.setAccept(mediatypes);
@@ -70,11 +76,13 @@ public class RestActions {
     }
 
     public ResultActions put(String urlTemplate, Object dto, String siteId) {
+        setSecurityContext();
         httpHeaders.set("SiteId", siteId);
         return put(urlTemplate, dto);
     }
 
     public ResultActions put(String urlTemplate, Object dto) {
+        setSecurityContext();
         addSiteIdHeader(DEFAULT_SITE_ID);
         try {
             return mvc.perform(MockMvcRequestBuilders
@@ -91,11 +99,13 @@ public class RestActions {
     }
 
     public ResultActions post(String urlTemplate, Object dto, String siteId) {
+        setSecurityContext();
         httpHeaders.set("SiteId", siteId);
         return post(urlTemplate, dto);
     }
 
     public ResultActions post(String urlTemplate, Object dto) {
+        setSecurityContext();
         addSiteIdHeader(DEFAULT_SITE_ID);
         try {
             return mvc.perform(MockMvcRequestBuilders
@@ -112,6 +122,7 @@ public class RestActions {
     }
 
     public ResultActions delete(String urlTemplate, Object... uriVars) {
+        setSecurityContext();
         addSiteIdHeader(DEFAULT_SITE_ID);
         try {
             return mvc.perform(MockMvcRequestBuilders
@@ -127,11 +138,13 @@ public class RestActions {
     }
 
     public ResultActions patch(String urlTemplate, Object dto, String siteId) {
+        setSecurityContext();
         httpHeaders.set("SiteId", siteId);
         return post(urlTemplate, dto);
     }
 
     public ResultActions patch(String urlTemplate, Object request) {
+        setSecurityContext();
         addSiteIdHeader(DEFAULT_SITE_ID);
         try {
             return mvc.perform(MockMvcRequestBuilders
@@ -152,7 +165,10 @@ public class RestActions {
         }
     }
 
-
+    private void setSecurityContext() {
+        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails,null);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
 
 
 
