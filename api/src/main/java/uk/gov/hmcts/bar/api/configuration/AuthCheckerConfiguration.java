@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import uk.gov.hmcts.bar.api.auth.CustomAuthCheckerUserOnlyFilter;
 import uk.gov.hmcts.bar.api.auth.UserResolver;
 import uk.gov.hmcts.bar.api.auth.UserTokenDetails;
 import uk.gov.hmcts.bar.api.data.service.BarUserService;
@@ -13,7 +14,6 @@ import uk.gov.hmcts.reform.auth.checker.core.SubjectResolver;
 import uk.gov.hmcts.reform.auth.checker.core.user.User;
 import uk.gov.hmcts.reform.auth.checker.core.user.UserRequestAuthorizer;
 import uk.gov.hmcts.reform.auth.checker.spring.AuthCheckerProperties;
-import uk.gov.hmcts.reform.auth.checker.spring.useronly.AuthCheckerUserOnlyFilter;
 import uk.gov.hmcts.reform.auth.parser.idam.core.user.token.HttpComponentsBasedUserTokenParser;
 import uk.gov.hmcts.reform.auth.parser.idam.core.user.token.UserTokenParser;
 
@@ -29,12 +29,12 @@ public class AuthCheckerConfiguration {
 
     @Bean
     public Function<HttpServletRequest, Collection<String>> authorizedRolesExtractor() {
-        return (any) -> Collections.unmodifiableList(Arrays.asList("super", "bar-fee-clerk", "bar-senior-clerk", "bar-delivery-manager", "bar-post-clerk"));
+        return any -> Collections.unmodifiableList(Arrays.asList("super", "bar-fee-clerk", "bar-senior-clerk", "bar-delivery-manager", "bar-post-clerk"));
     }
 
     @Bean
     public Function<HttpServletRequest, Optional<String>> userIdExtractor() {
-        return (request) -> Optional.empty();
+        return request -> Optional.empty();
     }
 
     @Bean
@@ -56,9 +56,9 @@ public class AuthCheckerConfiguration {
     }
 
     @Bean
-    public AuthCheckerUserOnlyFilter<User> authCheckerServiceAndUserFilter(UserRequestAuthorizer<User> userRequestAuthorizer,
+    public CustomAuthCheckerUserOnlyFilter<User> authCheckerServiceAndUserFilter(UserRequestAuthorizer<User> userRequestAuthorizer,
                                                                                    AuthenticationManager authenticationManager) {
-        AuthCheckerUserOnlyFilter<User> filter = new AuthCheckerUserOnlyFilter<>(userRequestAuthorizer);
+        CustomAuthCheckerUserOnlyFilter<User> filter = new CustomAuthCheckerUserOnlyFilter<>(userRequestAuthorizer);
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }
