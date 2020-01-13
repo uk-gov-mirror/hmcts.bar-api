@@ -5,9 +5,6 @@
         <cve>CVE-2018-14040</cve>
         <cve>CVE-2018-14041</cve>
         <cve>CVE-2018-14042</cve>
-        <!--<cve>CVE-2019-8331</cve>-->
-        <!--<cve>CVE-2015-9251</cve>-->
-        <!--<cve>CVE-2019-11358</cve>-->
     </suppress>
     <suppress>
         <!-- The info available on this over the internet is not sufficient. -->
@@ -29,7 +26,6 @@
         <cpe>cpe:/a:apache_tomcat:apache_tomcat:9.0.21</cpe>
         <cve>CVE-2019-12418</cve>
         <cve>CVE-2019-17563</cve>
-       <!-- <cve>CVE-2019-10086</cve>-->
     </suppress>
     <!-- Added after December 2019 -->
 </suppressions>
