@@ -29,7 +29,7 @@
         <cpe>cpe:/a:apache_tomcat:apache_tomcat:9.0.21</cpe>
         <cve>CVE-2019-12418</cve>
         <cve>CVE-2019-17563</cve>
-        <cve>CVE-2019-10086</cve>
+       <!-- <cve>CVE-2019-10086</cve>-->
     </suppress>
     <!-- Added after December 2019 -->
 </suppressions>
