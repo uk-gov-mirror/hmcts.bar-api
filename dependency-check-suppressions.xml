@@ -69,4 +69,9 @@
         <cve>CVE-2007-1651</cve>
         <cve>CVE-2007-1652</cve>
     </suppress>
+    <suppress>
+        <notes>junit version upgrade didn't fix it : https://deb.freexian.com/extended-lts/tracker/CVE-2020-15250</notes>
+        <packageUrl regex="true">^pkg:maven/junit/junit@.*$</packageUrl>
+        <vulnerabilityName>CVE-2020-15250</vulnerabilityName>
+    </suppress>
 </suppressions>
