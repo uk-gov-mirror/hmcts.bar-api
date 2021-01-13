@@ -28,7 +28,7 @@ module "bar-database" {
   postgresql_version = var.postgresql_version
 }
 
-module "bar-database" {
+module "bar-database-v11" {
   source = "git@github.com:hmcts/cnp-module-postgres?ref=master"
   product         = var.product
   component       = var.component
