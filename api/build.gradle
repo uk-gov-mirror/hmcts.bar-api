@@ -47,6 +47,8 @@ def appInsightsVersion = '2.4.1'
 
 dependencies {
 
+    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: '0.0.5'
+
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: javaLoggingVersion
   	compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: javaLoggingVersion
   	compile group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: javaLoggingVersion
