@@ -7,7 +7,7 @@ plugins {
     id "org.sonarqube" version "2.6.2"
     id 'jacoco'
 }
-def springBootVersion = '2.2.6.RELEASE'
+def springBootVersion = '2.3.6.RELEASE'
 
 def versions = [
         lombok: '1.18.12',
@@ -114,7 +114,6 @@ subprojects {
             exclude(module: 'java-logging-spring')
         }
         compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.11'
-        compile 'uk.gov.hmcts.reform:health-spring-boot-starter:0.0.4'
         compileOnly 'org.projectlombok:lombok:1.16.16'
         compileOnly 'com.google.code.findbugs:annotations:3.0.1'
 
@@ -125,6 +124,9 @@ subprojects {
         compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
         testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+        compile group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version: '0.0.4'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     }
 }
 
