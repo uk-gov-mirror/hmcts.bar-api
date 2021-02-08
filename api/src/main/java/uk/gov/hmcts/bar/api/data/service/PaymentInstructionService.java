@@ -262,8 +262,11 @@ public class PaymentInstructionService {
     }
 
     private MultiMap createHateoasResponse(List<PaymentInstructionStats> stats, String userId, String status, String oldStatus) {
+        LOG.info("INFO Enabled ***************111******************");
         MultiMap paymentInstructionStatsGroupedByBgc = new MultiValueMap();
+        LOG.info("INFO Enabled ***************2222******************");
         stats.stream().forEach(stat -> {
+            LOG.info("INFO Enabled **********3333***********************");
             String bgcNumber = stat.getBgc() == null ? PaymentInstructionsSpecifications.IS_NULL : stat.getBgc();
             Link detailslink = createHateoasLink(userId, status, stat.getPaymentType(), stat.getAction(), bgcNumber, STAT_DETAILS, oldStatus);
 
@@ -271,6 +274,7 @@ public class PaymentInstructionService {
 
             // TODO: this is just a temp solution we have to clarify with PO if we really need to group cheques and postal-orders
             if (GROUPED_TYPES.contains(stat.getPaymentType())) {
+                LOG.info("INFO Enabled **************5555*******************");
                 String paymentTypes = GROUPED_TYPES.stream().collect(Collectors.joining(","));
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
@@ -280,9 +284,12 @@ public class PaymentInstructionService {
             } else{
                 LOG.error("Bgc number is not null =============== ");
             }
-            LOG.warn("WARNING: Enabled ");
+
+            LOG.info("INFO Enabled ****************66666666*****************"+stat.getBgc());
+
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null || stat.getBgc().equals("") ? "0" : stat.getBgc(), resource);
         });
+        LOG.info("INFO Enabled ***************4444******************");
         return paymentInstructionStatsGroupedByBgc;
     }
 
