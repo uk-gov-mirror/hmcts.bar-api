@@ -280,6 +280,7 @@ public class PaymentInstructionService {
             } else{
                 LOG.error("Bgc number is not null =============== ");
             }
+            LOG.warn("WARNING: Enabled ");
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null || stat.getBgc().equals("") ? "0" : stat.getBgc(), resource);
         });
         return paymentInstructionStatsGroupedByBgc;
