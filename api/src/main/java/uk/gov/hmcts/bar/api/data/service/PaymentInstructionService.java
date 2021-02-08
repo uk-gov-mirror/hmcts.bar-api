@@ -275,7 +275,7 @@ public class PaymentInstructionService {
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
             }
-
+            LOG.info("stat.getBgc() :"+stat.getBgc());
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null || stat.getBgc().equals("") ? "0" : stat.getBgc(), resource);
         });
         return paymentInstructionStatsGroupedByBgc;
