@@ -275,7 +275,11 @@ public class PaymentInstructionService {
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
             }
-            LOG.info("print bgc number :::INFO +++++++++++++++++::"+stat.getBgc());
+            if(stat.getBgc() == null){
+                LOG.error("Bgc number is null ++++++++++++++++++++ ");
+            } else{
+                LOG.error("Bgc number is not null =============== ");
+            }
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null || stat.getBgc().equals("") ? "0" : stat.getBgc(), resource);
         });
         return paymentInstructionStatsGroupedByBgc;
