@@ -281,11 +281,8 @@ public class PaymentInstructionService {
                 LOG.error("Bgc number is null ++++++++++++++++++++ "+paymentTypes);
             }
             if(stat.getBgc() == null){
-                LOG.error("Bgc number is null +++++++++++111+++++++++ "+userId);
-                LOG.error("Bgc number is null ++++++++++222++++++++++ "+status);
-                LOG.error("Bgc number is null +++++++++++333+++++++++ "+stat.getAction());
-                LOG.error("Bgc number is null +++++++++++4444+++++++++ "+oldStatus);
-             //   LOG.info("INFO Enabled ************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
+                String vare1 = userId+"***userId****"+status+" ****status*****"+bgcNumber+"****oldStatus****"+oldStatus;
+                LOG.error("Bgc number is null ++++++++++222++++++++++ "+vare1);
             } else{
                 LOG.error("Bgc number is not null =============== ");
               //  LOG.info("INFO Enabled *************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
