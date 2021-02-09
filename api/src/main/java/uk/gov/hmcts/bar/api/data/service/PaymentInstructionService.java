@@ -285,11 +285,11 @@ public class PaymentInstructionService {
                 LOG.error("Bgc number is not null =============== ");
             }
 
-            LOG.info("INFO Enabled ****************66666666*****************"+stat.getBgc());
+            LOG.info("INFO Enabled ****************66666666*****new 11111************{0}","stat.getBgc()");
 
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
         });
-        LOG.info("INFO Enabled ***************4444******new 222************"+paymentInstructionStatsGroupedByBgc.toString());
+        LOG.info("INFO Enabled ***************4444******new 3333************ {0}","paymentInstructionStatsGroupedByBgc.toString()");
         return paymentInstructionStatsGroupedByBgc;
     }
 
