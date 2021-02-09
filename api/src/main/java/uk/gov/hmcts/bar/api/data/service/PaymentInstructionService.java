@@ -278,7 +278,7 @@ public class PaymentInstructionService {
                 String paymentTypes = GROUPED_TYPES.stream().collect(Collectors.joining(","));
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
-                LOG.error("Bgc number is null ++++++++++++++++++++ "+paymentTypes);
+                LOG.error("Bgc number is null ++++++++++++++++++++ "+paymentInstructionStatsGroupedByBgc.toString());
             }
             if(stat.getBgc() == null){
                 LOG.error("Bgc number is null ++++++++++222++++++++++ ");
