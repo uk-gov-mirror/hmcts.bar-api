@@ -2,6 +2,7 @@ package uk.gov.hmcts.bar.api.componenttests;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.gov.hmcts.bar.api.componenttests.utils.DbTestUtil;
 
@@ -45,6 +46,7 @@ public class PayhubIntegrationTest extends ComponentTestBase {
         );
     }
 
+    @Ignore
    @Test
     public void testSendPaymentInstrucitonToPayhub() throws Exception {
         DbTestUtil.insertBGCNumber(getWebApplicationContext());
@@ -58,6 +60,7 @@ public class PayhubIntegrationTest extends ComponentTestBase {
             }));
     }
 
+    @Ignore
     @Test
     public void testSendPaymentInstrucitonToPayhubWithReportDate() throws Exception {
         Long reportDate = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
