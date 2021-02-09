@@ -6,7 +6,6 @@ import org.apache.commons.collections.map.MultiValueMap;
 import org.ff4j.FF4j;
 import org.ff4j.exception.FeatureAccessException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.*;
 import org.springframework.data.domain.Page;
@@ -187,7 +186,6 @@ public class PaymentInstructionServiceTest {
         verify(auditRepository,times(1)).trackPaymentInstructionEvent("CREATE_PAYMENT_INSTRUCTION_EVENT",chequePaymentInstructionMock,barUserMock);
     }
 
-    @Ignore
     @Test
     public void shouldReturnPaymentInstruction_whenSavePaymentInstructionForGivenCashInstructionIsCalled()
         throws Exception {
