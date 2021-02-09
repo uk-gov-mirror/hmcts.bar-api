@@ -287,9 +287,9 @@ public class PaymentInstructionService {
 
             LOG.info("INFO Enabled ****************66666666*****************"+stat.getBgc());
 
-            paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null || stat.getBgc().equals("") ? "0" : stat.getBgc(), resource);
+            paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
         });
-        LOG.info("INFO Enabled ***************4444******new************"+paymentInstructionStatsGroupedByBgc.toString()+" ");
+        LOG.info("INFO Enabled ***************4444******new************");
         return paymentInstructionStatsGroupedByBgc;
     }
 
