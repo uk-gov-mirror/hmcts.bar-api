@@ -278,15 +278,17 @@ public class PaymentInstructionService {
                 String paymentTypes = GROUPED_TYPES.stream().collect(Collectors.joining(","));
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
+                LOG.error("Bgc number is null ++++++++++++++++++++ "+paymentTypes);
             }
             if(stat.getBgc() == null){
-                LOG.error("Bgc number is null ++++++++++++++++++++ ");
-                LOG.info("INFO Enabled ************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
-
+                LOG.error("Bgc number is null +++++++++++111+++++++++ "+userId);
+                LOG.error("Bgc number is null ++++++++++222++++++++++ "+status);
+                LOG.error("Bgc number is null +++++++++++333+++++++++ "+stat.getAction());
+                LOG.error("Bgc number is null +++++++++++4444+++++++++ "+oldStatus);
+             //   LOG.info("INFO Enabled ************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
             } else{
                 LOG.error("Bgc number is not null =============== ");
-                LOG.info("INFO Enabled *************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
-
+              //  LOG.info("INFO Enabled *************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
             }
 
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
