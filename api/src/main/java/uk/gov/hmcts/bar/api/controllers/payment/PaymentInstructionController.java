@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.MultiMap;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.EntityModel;
@@ -31,8 +30,6 @@ import javax.validation.Valid;
 import java.time.*;
 import java.util.List;
 import java.util.Optional;
-
-import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -52,9 +49,6 @@ public class PaymentInstructionController {
     private final PayHubService payHubService;
 
     private final FullRemissionService fullRemissionService;
-
-    private static final Logger LOG = getLogger(PaymentInstructionController.class);
-
 
     @Autowired
     public PaymentInstructionController(PaymentInstructionService paymentInstructionService,
@@ -536,9 +530,7 @@ public class PaymentInstructionController {
         @RequestParam(name = "sentToPayhub", required = false, defaultValue = "false") boolean sentToPayhub) {
 
         MultiMap stats = paymentInstructionService.getPaymentStatsByUserGroupByType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
-        LOG.info("Controller class ************111111111111*********: Stats "+stats);
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUser(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        LOG.info("Controller class *******1111111111111111**************: link "+link);
         return new EntityModel<>(stats, link);
     }
 
@@ -556,9 +548,7 @@ public class PaymentInstructionController {
         @RequestParam(name = "sentToPayhub", required = false, defaultValue = "false") boolean sentToPayhub) {
 
         MultiMap stats = paymentInstructionService.getPaymentInstructionsByUserGroupByActionAndType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
-        LOG.info("Controller class ***********2222222222222**********: Stats "+stats);
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUserGroupByAction(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        LOG.info("Controller class *******22222222222222**************: link "+link);
         return new EntityModel<>(stats, link);
     }
 
