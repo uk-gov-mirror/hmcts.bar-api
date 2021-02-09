@@ -281,15 +281,16 @@ public class PaymentInstructionService {
             }
             if(stat.getBgc() == null){
                 LOG.error("Bgc number is null ++++++++++++++++++++ ");
+                LOG.info("INFO Enabled ************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
+
             } else{
                 LOG.error("Bgc number is not null =============== ");
-            }
+                LOG.info("INFO Enabled *************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
 
-            LOG.info("INFO Enabled ****************66666666*****new 11111************{0}","stat.getBgc()");
+            }
 
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
         });
-        LOG.info("INFO Enabled ***************4444******new 3333************ {0}","paymentInstructionStatsGroupedByBgc.toString()");
         return paymentInstructionStatsGroupedByBgc;
     }
 
