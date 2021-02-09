@@ -289,7 +289,7 @@ public class PaymentInstructionService {
 
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
         });
-        LOG.info("INFO Enabled ***************4444******new************");
+        LOG.info("INFO Enabled ***************4444******new 222************");
         return paymentInstructionStatsGroupedByBgc;
     }
 
