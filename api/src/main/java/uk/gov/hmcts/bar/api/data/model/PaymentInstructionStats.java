@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public interface PaymentInstructionStats {
-    String getUserId();
+
     String getName();
     Integer getCount();
     String getStatus();
@@ -13,4 +13,5 @@ public interface PaymentInstructionStats {
     String getPaymentType();
     String getBgc();
     String getAction();
+    String getUserId();
 }
