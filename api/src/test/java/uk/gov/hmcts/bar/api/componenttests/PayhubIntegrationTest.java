@@ -46,7 +46,6 @@ public class PayhubIntegrationTest extends ComponentTestBase {
         );
     }
 
-    @Ignore
    @Test
     public void testSendPaymentInstrucitonToPayhub() throws Exception {
         DbTestUtil.insertBGCNumber(getWebApplicationContext());
@@ -60,7 +59,6 @@ public class PayhubIntegrationTest extends ComponentTestBase {
             }));
     }
 
-    @Ignore
     @Test
     public void testSendPaymentInstrucitonToPayhubWithReportDate() throws Exception {
         Long reportDate = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
