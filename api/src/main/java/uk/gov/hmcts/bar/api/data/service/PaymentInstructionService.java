@@ -276,10 +276,10 @@ public class PaymentInstructionService {
                 String paymentTypes = GROUPED_TYPES.stream().collect(Collectors.joining(","));
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
-                LOG.error("Bgc number is null ****************************************** "+paymentInstructionStatsGroupedByBgc.toString());
+                //LOG.error("Bgc number is null ****************************************** "+paymentInstructionStatsGroupedByBgc.toString());
             }
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
-            LOG.error("Bgc number is not null ========= 555555  *********** ====== new 1");
+            LOG.error("Bgc number is not null ========= 555555  *********** ====== new 2");
         });
         return paymentInstructionStatsGroupedByBgc;
     }

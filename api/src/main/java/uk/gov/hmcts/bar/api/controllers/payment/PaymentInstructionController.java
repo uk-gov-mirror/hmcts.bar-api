@@ -553,9 +553,11 @@ public class PaymentInstructionController {
         @RequestParam(name = "sentToPayhub", required = false, defaultValue = "false") boolean sentToPayhub) {
 
         MultiMap stats = paymentInstructionService.getPaymentInstructionsByUserGroupByActionAndType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
-        LOG.error("Controller =====222===stats====="+stats.toString());
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUserGroupByAction(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        LOG.error("Controller =====222===link====="+link.toString());
+        if(true){
+            LOG.error("Controller =====222===stats====="+stats.toString());
+            LOG.error("Controller =====222===link====="+link.toString());
+        }
         return new EntityModel<MultiMap>(stats, link);
     }
 
