@@ -554,8 +554,8 @@ public class PaymentInstructionController {
 
         MultiMap stats = paymentInstructionService.getPaymentInstructionsByUserGroupByActionAndType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUserGroupByAction(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        LOG.info("Controller =====222===stats====="+stats);
-        LOG.info("Controller =====222===link====="+link);
+        LOG.info("Controller =====222===stats===******************=="+stats);
+        //LOG.info("Controller =====222===link====="+link);
         return new EntityModel<>(stats, link);
     }
 
