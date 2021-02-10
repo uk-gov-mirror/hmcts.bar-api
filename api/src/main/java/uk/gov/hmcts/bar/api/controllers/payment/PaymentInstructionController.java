@@ -536,7 +536,7 @@ public class PaymentInstructionController {
 
         MultiMap stats = paymentInstructionService.getPaymentStatsByUserGroupByType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUser(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        return new EntityModel<MultiMap>(stats, link);
+        return new EntityModel<>(stats, link);
     }
 
     @ApiOperation(value = "collect stats for a user", notes = "Collect all payment instruction stats for a user grouped by action and type")
@@ -558,7 +558,7 @@ public class PaymentInstructionController {
             LOG.error("Controller =====222===stats====="+stats.toString());
             LOG.error("Controller =====222===link====="+link.toString());
         }
-        return new EntityModel<MultiMap>(stats, link);
+        return new EntityModel<>(stats, link);
     }
 
 
