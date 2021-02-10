@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.MultiMap;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.EntityModel;
@@ -31,6 +32,7 @@ import java.time.*;
 import java.util.List;
 import java.util.Optional;
 
+import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -50,6 +52,8 @@ public class PaymentInstructionController {
     private final PayHubService payHubService;
 
     private final FullRemissionService fullRemissionService;
+
+    private static final Logger LOG = getLogger(PaymentInstructionController.class);
 
     @Autowired
     public PaymentInstructionController(PaymentInstructionService paymentInstructionService,
@@ -531,8 +535,10 @@ public class PaymentInstructionController {
         @RequestParam(name = "sentToPayhub", required = false, defaultValue = "false") boolean sentToPayhub) {
 
         MultiMap stats = paymentInstructionService.getPaymentStatsByUserGroupByType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
+        LOG.info("Controller =====111===stats====="+stats.toString());
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUser(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        return new EntityModel<>(stats, link);
+        LOG.info("Controller =====111===link ====="+link.toString());
+        return new EntityModel<MultiMap>(stats, link);
     }
 
     @ApiOperation(value = "collect stats for a user", notes = "Collect all payment instruction stats for a user grouped by action and type")
@@ -549,8 +555,10 @@ public class PaymentInstructionController {
         @RequestParam(name = "sentToPayhub", required = false, defaultValue = "false") boolean sentToPayhub) {
 
         MultiMap stats = paymentInstructionService.getPaymentInstructionsByUserGroupByActionAndType(id, status, oldStatus, sentToPayhub, request.getBarUser().getSelectedSiteId());
+        LOG.info("Controller =====222===stats====="+stats.toString());
         Link link = linkTo(methodOn(PaymentInstructionController.class).getPaymentInstructionStatsByUserGroupByAction(request, id, status, oldStatus, sentToPayhub)).withSelfRel();
-        return new EntityModel<>(stats, link);
+        LOG.info("Controller =====222===link====="+link.toString());
+        return new EntityModel<MultiMap>(stats, link);
     }
 
 

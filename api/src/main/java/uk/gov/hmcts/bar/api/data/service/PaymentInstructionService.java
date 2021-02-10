@@ -262,11 +262,9 @@ public class PaymentInstructionService {
     }
 
     private MultiMap createHateoasResponse(List<PaymentInstructionStats> stats, String userId, String status, String oldStatus) {
-        LOG.info("INFO Enabled ***************111******************");
         MultiMap paymentInstructionStatsGroupedByBgc = new MultiValueMap();
         LOG.info("INFO Enabled ***************2222******************");
         stats.stream().forEach(stat -> {
-            LOG.info("INFO Enabled **********3333***********************");
             String bgcNumber = stat.getBgc() == null ? PaymentInstructionsSpecifications.IS_NULL : stat.getBgc();
             Link detailslink = createHateoasLink(userId, status, stat.getPaymentType(), stat.getAction(), bgcNumber, STAT_DETAILS, oldStatus);
 
@@ -274,20 +272,14 @@ public class PaymentInstructionService {
 
             // TODO: this is just a temp solution we have to clarify with PO if we really need to group cheques and postal-orders
             if (GROUPED_TYPES.contains(stat.getPaymentType())) {
-                LOG.info("INFO Enabled **************5555*******************");
+                LOG.info("INFO Enabled **************4444444*******************");
                 String paymentTypes = GROUPED_TYPES.stream().collect(Collectors.joining(","));
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
-                LOG.error("Bgc number is null ++++++++++++++++++++ "+paymentInstructionStatsGroupedByBgc.toString());
+                LOG.error("Bgc number is null ****************************************** "+paymentInstructionStatsGroupedByBgc.toString());
             }
-            if(stat.getBgc() == null){
-                LOG.error("Bgc number is null ++++++++++222++++++++++ ");
-            } else{
-                LOG.error("Bgc number is not null =============== ");
-              //  LOG.info("INFO Enabled *************** {0}"+paymentInstructionStatsGroupedByBgc.toString());
-            }
-
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
+            LOG.error("Bgc number is not null ========= 555555  *********** ====== new 1");
         });
         return paymentInstructionStatsGroupedByBgc;
     }
