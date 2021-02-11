@@ -276,7 +276,7 @@ public class PaymentInstructionService {
                 resource.add(groupedLink.expand());
             }
             paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
-            LOG.error("Bgc number is not null ========= 555555  *********** ====== new 6");
+            LOG.error("Bgc number is not null ========= 555555  *********** ====== new 7");
         });
         return paymentInstructionStatsGroupedByBgc;
     }
