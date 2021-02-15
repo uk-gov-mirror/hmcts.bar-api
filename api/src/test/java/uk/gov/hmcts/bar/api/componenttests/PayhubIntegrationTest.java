@@ -2,6 +2,7 @@ package uk.gov.hmcts.bar.api.componenttests;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.gov.hmcts.bar.api.componenttests.utils.DbTestUtil;
 
