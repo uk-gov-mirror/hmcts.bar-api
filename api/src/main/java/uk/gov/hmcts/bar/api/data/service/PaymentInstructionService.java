@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import static org.springframework.hateoas.EntityModel.of;
 
 @Service
 @Transactional
@@ -267,7 +267,7 @@ public class PaymentInstructionService {
             String bgcNumber = stat.getBgc() == null ? PaymentInstructionsSpecifications.IS_NULL : stat.getBgc();
             Link detailslink = createHateoasLink(userId, status, stat.getPaymentType(), stat.getAction(), bgcNumber, STAT_DETAILS, oldStatus);
 
-            EntityModel<PaymentInstructionStats> resource = new EntityModel<>(stat, detailslink.expand());
+            EntityModel<PaymentInstructionStats> resource = of(stat, detailslink.expand());
 
             // TODO: this is just a temp solution we have to clarify with PO if we really need to group cheques and postal-orders
             if (GROUPED_TYPES.contains(stat.getPaymentType())) {
@@ -275,8 +275,8 @@ public class PaymentInstructionService {
                 Link groupedLink = createHateoasLink(userId, status, paymentTypes, stat.getAction(), bgcNumber, STAT_GROUP_DETAILS, oldStatus);
                 resource.add(groupedLink.expand());
             }
-            paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null ? "0" : stat.getBgc(), resource);
-            LOG.error("Bgc number is not null ========= 555555  *********** ====== new 3");
+
+            paymentInstructionStatsGroupedByBgc.put(stat.getBgc() == null || stat.getBgc().equals("")  ? "0" : stat.getBgc(), resource);
         });
         return paymentInstructionStatsGroupedByBgc;
     }
